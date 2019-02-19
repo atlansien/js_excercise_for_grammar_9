@@ -31,14 +31,25 @@
 
 // ここでeach関数を作る
 
+const each = (array, callback) => {
+    for(let i = 0; i < array.length; i++){
+        callback(array[i], i);
+    }
+}
 
 // ここでeach関数の挙動を確かめる
+const inputArrayForEach = [1, 2, 3, 4];
+const returnedValueOfEach = each(inputArrayForEach, (value,index) => {
+    console.log('each関数のコールバック関数内 index: '+ index, '値:' + value);
+});
 
+console.log('each関数の入力値', inputArrayForEach);
+console.log('each関数の戻り値', returnedValueOfEach);
 
 /**
  * 課題2: 「Array.prototype.map()」と同等の機能を持つ関数を作る
  *   - 「Array.prototype.map()」のドキュメント
- *     - https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+ *     - https://developer.mozilla.org/ja/docsco/Web/JavaScript/Reference/Global_Objects/Array/map
  *   - 関数名は「map」とする
  *   - map関数は次の2つの引数を持つ
  *     - 第1引数: 配列(引数名はarrayとする)
@@ -64,9 +75,25 @@
 
 // ここでmap関数を実装する
 
+const map = (array, callback) =>{
+    const newArray = [];
+    each(array, (value, index) => {
+        const newValue = callback(value, index);
+        newArray.push(newValue);
+    });
+    return newArray;
+}
+
 
 // ここでmap関数の挙動を確認する
+const inputArrayForMap = [1, 2, 3];
+const returnedValueForMap = map(inputArrayForMap, (value, index) => {
+    console.log('map関数のコールバック関数内 index: ' + index, ' 値: ' + value);
+    return value * 2;
+});
 
+console.log('map関数の入力値', inputArrayForMap);
+console.log('map関数の戻り値', returnedValueForMap);
 
 
 /**
@@ -99,7 +126,23 @@
  */
 
 // ここでfilter関数を作る
+const filter =(array, callback) => {
+    const filteredArray = [];
+    each(array, (value, index) => {
+        if(callback(value, index)) {
+            filteredArray.push(value);
+        }
+    });
+    return filteredArray;
+}
+
+inputArrayForFilter = [1, 2, 3, 4, 5];
+returnedValueOfFilter = filter(inputArrayForFilter, (value, index) => {
+    console.log('filter関数のコールバック関数内 index: ' + index, '値: ' + value);
+    return value % 2 === 0;
+});
 
 
 // ここでfilter関数の挙動を確認する
-
+console.log('filter関数の入力値', inputArrayForFilter);
+console.log('filter関数の戻り値', returnedValueOfFilter);
